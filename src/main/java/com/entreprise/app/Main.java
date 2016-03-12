@@ -10,7 +10,13 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class Main {
 
     public static void main (String[] args){
-        Server server = new Server(Integer.valueOf(8282));
+
+        String port = System.getenv("PORT");
+        if (port == null || port.isEmpty()) {
+            port = "8282";
+        }
+
+        Server server = new Server(Integer.valueOf(port));
         HibernateUtils.getSessionFactory().openSession();
         final WebAppContext root = new WebAppContext();
         root.setContextPath("/");
